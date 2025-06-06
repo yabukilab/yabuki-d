@@ -24,7 +24,7 @@
             <p class="initial-message">検索結果を読み込み中...</p>
         </section>
 
-        <a href="search.html" class="back-link">新しい単語を検索する</a>
+        <a href="search.php" class="back-link">新しい単語を検索する</a>
     </main>
 
     <footer>

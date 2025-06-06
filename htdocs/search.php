@@ -19,7 +19,7 @@
           action="results.html" : フォーム送信先のページ
           method="GET" : URLに検索語を含めて送信する方法
         -->
-        <form class="search-container" action="results.html" method="GET">
+        <form class="search-container" action="results.php" method="GET">
             <!-- 
               name="q" を設定することで、URLに ?q=検索語 の形でデータが送られます 
             -->
