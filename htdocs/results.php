@@ -16,6 +16,7 @@
     <main>
         <!-- 検索キーワードがここに表示されます -->
         <section id="search-query-display">
+            <h2>検索結果</h2>
             <!-- 例: <h2>"bonjour" の検索結果</h2> -->
         </section>
 
