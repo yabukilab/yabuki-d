@@ -1,5 +1,5 @@
 <?php
-$dsn = 'mysql:host=localhost;dbname=mydb;charset=utf8';  // ローカルのMySQLサーバーを指定
+$dsn = 'mysql:host=localhost;dbname=table1;charset=utf8';  // ローカルのMySQLサーバーを指定
 $user = 'testuser';
 $password = 'pass';
 try {
