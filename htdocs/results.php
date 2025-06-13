@@ -1,3 +1,75 @@
+<?php
+// --- データベース接続設定 ---
+// ご自身の環境に合わせて変更してください
+$db_host = 'localhost';
+$db_name = 'french_dictionary_db';
+$db_user = 'root';
+$db_pass = '';
+$db_char = 'utf8mb4';
+
+// DSNとPDOオプション
+$dsn = "mysql:host={$db_host};dbname={$db_name};charset={$db_char}";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+
+// 変数の初期化
+$search_keyword_display = '';
+$results_html = '';
+
+try {
+    $pdo = new PDO($dsn, $db_user, $db_pass, $options);
+
+    if (isset($_GET['q']) && !empty(trim($_GET['q']))) {
+        $search_keyword = trim($_GET['q']);
+        $search_keyword_display = htmlspecialchars($search_keyword, ENT_QUOTES, 'UTF-8');
+
+        // SQLクエリの準備
+        $sql = "SELECT french_word, japanese_translation, pronunciation, part_of_speech, example_sentence FROM words WHERE french_word LIKE ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['%' . $search_keyword . '%']);
+        $results = $stmt->fetchAll();
+
+        if ($results) {
+            foreach ($results as $row) {
+                // style.cssのクラス定義に合わせてHTMLを生成
+                $results_html .= '<div class="result-item">';
+                $results_html .= '<h3>' . htmlspecialchars($row['french_word'], ENT_QUOTES, 'UTF-8') . '</h3>';
+
+                // 発音データがあれば表示
+                if (!empty($row['pronunciation'])) {
+                    $results_html .= '<p class="pronunciation">[' . htmlspecialchars($row['pronunciation'], ENT_QUOTES, 'UTF-8') . ']</p>';
+                }
+
+                // 品詞データがあれば表示
+                if (!empty($row['part_of_speech'])) {
+                    $results_html .= '<p class="type">' . htmlspecialchars($row['part_of_speech'], ENT_QUOTES, 'UTF-8') . '</p>';
+                }
+
+                // 日本語訳
+                $results_html .= '<p class="meaning">' . htmlspecialchars($row['japanese_translation'], ENT_QUOTES, 'UTF-8') . '</p>';
+                
+                // 例文データがあれば表示
+                if (!empty($row['example_sentence'])) {
+                    $results_html .= '<p><strong>例文:</strong> ' . htmlspecialchars($row['example_sentence'], ENT_QUOTES, 'UTF-8') . '</p>';
+                }
+
+                $results_html .= '</div>';
+            }
+        } else {
+            $results_html = '<p class="not-found-message">該当する単語は見つかりませんでした。</p>';
+        }
+    } else {
+        $results_html = '<p class="initial-message">検索キーワードを入力してください。</p>';
+    }
+
+} catch (PDOException $e) {
+    error_log("Database Error: " . $e->getMessage());
+    $results_html = '<p class="error-message">データベースへの接続に失敗しました。</p>';
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,15 +85,14 @@
     </header>
 
     <main>
-        <!-- 検索キーワードがここに表示されます -->
         <section id="search-query-display">
-            <h2>検索結果</h2>
-            <!-- 例: <h2>"bonjour" の検索結果</h2> -->
+            <?php if (!empty($search_keyword_display)): ?>
+                <h2>"<span><?php echo $search_keyword_display; ?></span>" の検索結果</h2>
+            <?php endif; ?>
         </section>
 
-        <!-- 検索結果がここに表示されます -->
         <section id="results-container">
-            <p class="initial-message">検索結果を読み込み中...</p>
+            <?php echo $results_html; ?>
         </section>
 
         <a href="search.php" class="back-link">新しい単語を検索する</a>

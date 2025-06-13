@@ -138,5 +138,16 @@ main {
 }
 .back-link:hover { text-decoration: underline; }
 
+/* エラーメッセージ用のスタイル */
+.error-message {
+    color: #e74c3c; /* 赤色 */
+    font-weight: bold;
+    text-align: center;
+    background-color: #fdd;
+    border: 1px solid #e74c3c;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
 /* フッター */
 footer { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; }
