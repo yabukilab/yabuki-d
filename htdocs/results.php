@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>検索結果 - Dictionnaire Français</title>
-    <link rel="stylesheet" href="searchstyle.css">
+    <title>検索結果 - フランス語辞書</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>Dictionnaire Français</h1>
-        <p>フランス語辞書</p>
+        <h1>フランス語辞書</h1>
     </header>
 
     <main>
