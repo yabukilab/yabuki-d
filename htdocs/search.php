@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>フランス語辞書</title>
-    <link rel="stylesheet" href="searchstyle.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
