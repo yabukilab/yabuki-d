@@ -9,11 +9,11 @@ body {
 }
 /* ヘッダー */
 header {
-    background-color: #005a9c; /* フランスの旗の青 */
-    color: white;
+    background-color: lightgray;
+    color: black;
     text-align: center;
     padding: 1.5rem 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-bottom: 1px solid black;
 }
 header h1 { margin: 0; font-size: 2rem; }
 header p { margin: 0.2rem 0 0; font-weight: 300; }
@@ -41,8 +41,8 @@ main {
 .search-container button {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
-    background-color: #ef4135; /* フランスの旗の赤 */
-    color: white;
+    background-color: lightgray; /* フランスの旗の赤 */
+    color: black;
     border: none;
     border-radius: 8px;
     cursor: pointer;
