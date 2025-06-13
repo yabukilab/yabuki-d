@@ -1,76 +1,52 @@
+<?php
+// 登録処理（POST時）
+$error = "";
+$success = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $userid = $_POST["userid"] ?? "";
+    $password = $_POST["password"] ?? "";
+    $password_confirm = $_POST["password_confirm"] ?? "";
+
+    // ダミーの既存ID（実際はDBで確認）
+    $usedIds = ["user1", "testuser", "admin"];
+
+    // バリデーション
+    if (in_array($userid, $usedIds)) {
+        $error = "※このIDは既に使われています";
+    } elseif ($password !== $password_confirm) {
+        $error = "※パスワードが一致しません";
+    } else {
+        // 登録成功（実際はDB保存）
+        $success = true;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>新規登録</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      border: 1px solid #000;
-      padding: 30px;
-      width: 300px;
-      text-align: center;
-    }
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 5px;
-      margin-bottom: 10px;
-    }
-    .error {
-      color: red;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-      display: none; /* 初期は非表示 */
-    }
-    button {
-      padding: 5px 15px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h2>新規登録</h2>
-    <p>IDとパスワードを入力してください</p>
-    <form id="registerForm" action="/register" method="post">
-      <div>
-        <label for="userId">ID</label><br>
-        <input type="text" id="userId" name="userId" maxlength="20" required>
-      </div>
-      <div>
-        <label for="password">パスワード</label><br>
-        <input type="password" id="password" name="password" maxlength="36" required>
-      </div>
-      <div>
-        <label for="confirmPassword">パスワード（確認用）</label><br>
-        <input type="password" id="confirmPassword" name="confirmPassword" maxlength="36" required>
-        <div class="error" id="passwordError">※パスワードが一致しません</div>
-      </div>
-      <button type="submit">登録する</button>
-    </form>
+    <?php if ($success): ?>
+      <h2>登録が完了しました！</h2>
+    <?php else: ?>
+      <h2>新規登録</h2>
+      <form action="register.php" method="post">
+        <input type="text" name="userid" placeholder="ID（20文字まで）" maxlength="20" required value="<?= htmlspecialchars($userid ?? '') ?>" />
+        <input type="password" name="password" placeholder="パスワード（36文字まで）" maxlength="36" required />
+        <input type="password" name="password_confirm" placeholder="パスワード確認" maxlength="36" required />
+        <?php if (!empty($error)): ?>
+          <div class="error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+        <button type="submit">登録する</button>
+      </form>
+    <?php endif; ?>
   </div>
-
-  <script>
-    const form = document.getElementById("registerForm");
-    const pwInput = document.getElementById("password");
-    const confirmPwInput = document.getElementById("confirmPassword");
-    const pwError = document.getElementById("passwordError");
-
-    form.addEventListener("submit", function(event) {
-      pwError.style.display = "none";
-
-      if (pwInput.value !== confirmPwInput.value) {
-        pwError.style.display = "block";
-        event.preventDefault(); // フォーム送信中止
-      }
-    });
-  </script>
 </body>
 </html>
