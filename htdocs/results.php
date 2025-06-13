@@ -1,14 +1,13 @@
 <?php
 // --- データベース接続設定 ---
 // ご自身の環境に合わせて変更してください
-$db_host = 'localhost';
-$db_name = 'french_dictionary_db';
-$db_user = 'root';
-$db_pass = '';
-$db_char = 'utf8mb4';
+$dbServer = isset($_ENV['MYSQL_SERVER'])    ? $_ENV['MYSQL_SERVER']      : '127.0.0.1';
+$dbUser = isset($_SERVER['MYSQL_USER'])     ? $_SERVER['MYSQL_USER']     : 'testuser';
+$dbPass = isset($_SERVER['MYSQL_PASSWORD']) ? $_SERVER['MYSQL_PASSWORD'] : 'pass';
+$dbName = isset($_SERVER['MYSQL_DB'])       ? $_SERVER['MYSQL_DB']       : 'worddb';
 
 // DSNとPDOオプション
-$dsn = "mysql:host={$db_host};dbname={$db_name};charset={$db_char}";
+$dsn = "mysql:host={$dbServer};dbname={$dbName};charset=utf8";
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -20,14 +19,14 @@ $search_keyword_display = '';
 $results_html = '';
 
 try {
-    $pdo = new PDO($dsn, $db_user, $db_pass, $options);
+    $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
 
     if (isset($_GET['q']) && !empty(trim($_GET['q']))) {
         $search_keyword = trim($_GET['q']);
         $search_keyword_display = htmlspecialchars($search_keyword, ENT_QUOTES, 'UTF-8');
 
         // SQLクエリの準備
-        $sql = "SELECT french_word, japanese_translation, pronunciation, part_of_speech, example_sentence FROM words WHERE french_word LIKE ?";
+        $sql = "SELECT french_word, japanese_translation, part_of_speech FROM words WHERE french_word LIKE ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['%' . $search_keyword . '%']);
         $results = $stmt->fetchAll();
