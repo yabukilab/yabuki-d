@@ -42,8 +42,4 @@ button {
   color: white;
   border: none;
 }
-@media screen and (min-width: 600px) {
-  body {
-    display: none; /* タブレット・PCでは非表示 */
-  }
-}
+
