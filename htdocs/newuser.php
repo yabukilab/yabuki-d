@@ -50,6 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
   <footer>
       &copy;  2025 yabuki lab
-    </footer>
+  </footer>
   </body>
 </html>
