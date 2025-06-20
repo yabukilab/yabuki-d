@@ -46,9 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button type="submit">ログイン</button>
       </form>
     <?php endif; ?>
-  </div>
+    </div> <!-- ← ここで .container 終了 -->
+
   <footer>
-      &copy;  2025 yabuki lab
+    &copy; 2025 yabuki lab
   </footer>
-  </body>
+
+</body>
 </html>
