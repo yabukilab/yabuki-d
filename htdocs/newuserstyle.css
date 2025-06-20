@@ -1,43 +1,37 @@
-/* すべてのボックスのサイズ計算を border-box に */
+/* すべてのボックスのサイズ計算をborder-boxに */
 * {
   box-sizing: border-box;
 }
 
-/* body全体を縦並びにし、min-heightで画面全体を覆う */
+/* body全体のレイアウト */
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  background: #fff;
-}
-
-/* mainで中央寄せレイアウトを実現（中身が中央に来る） */
-main {
-  flex: 1; /* 残りの高さを埋める */
-  display: flex;
+  flex-direction: column; /* 縦並び */
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  background: #fff;
+  position: relative; /* フッター位置調整の基準 */
 }
 
-/* 登録フォーム本体 */
+/* メインのボックス */
 .container {
   width: 95%;
   max-width: 280px;
   border: 1px solid #000;
   padding: 20px;
+  margin-bottom: 60px; /* フッター分の余白を確保 */
 }
 
-/* 見出し */
 h2 {
   font-size: 1rem;
   margin-bottom: 10px;
   text-align: center;
 }
 
-/* 入力欄 */
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -46,14 +40,12 @@ input[type="password"] {
   font-size: 1rem;
 }
 
-/* エラー表示 */
 .error {
   color: red;
   font-size: 0.8rem;
   margin-bottom: 10px;
 }
 
-/* 登録ボタン */
 button {
   width: 100%;
   padding: 6px;
@@ -63,12 +55,14 @@ button {
   border: none;
 }
 
-/* フッター（最下部に表示） */
+/* ✅ フッター */
 footer {
   text-align: center;
   padding: 1rem;
   color: #888;
   font-size: 0.9rem;
   width: 100%;
-  border-top: 1px solid #ccc;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
