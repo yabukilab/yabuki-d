@@ -1,27 +1,37 @@
+/* すべてのボックスのサイズ計算をborder-boxに */
 * {
   box-sizing: border-box;
 }
+
+/* body全体のレイアウト */
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
   display: flex;
+  flex-direction: column; /* 縦並び */
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: #fff;
+  position: relative; /* フッター位置調整の基準 */
 }
+
+/* メインのボックス */
 .container {
   width: 95%;
   max-width: 280px;
   border: 1px solid #000;
   padding: 20px;
+  margin-bottom: 60px; /* フッター分の余白を確保 */
 }
+
 h2 {
   font-size: 1rem;
   margin-bottom: 10px;
   text-align: center;
 }
+
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -29,11 +39,13 @@ input[type="password"] {
   margin-bottom: 10px;
   font-size: 1rem;
 }
+
 .error {
   color: red;
   font-size: 0.8rem;
   margin-bottom: 10px;
 }
+
 button {
   width: 100%;
   padding: 6px;
@@ -43,5 +55,16 @@ button {
   border: none;
 }
 
-/* フッター */
-footer { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; }
+/* ✅ フッター */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #f9f9f9;
+  color: #888;
+  font-size: 0.9rem;
+  border-top: 1px solid #ccc;
+}
