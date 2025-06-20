@@ -49,12 +49,8 @@ try {
         <button type="submit">登録する</button>
       </form>
     <?php endif; ?>
-    </div> <!-- ← ここで .container 終了 -->
+  </div>
 
-  <footer>
-    &copy; 2025 yabuki lab
-  </footer>
-
+<footer>© 2025 yabuki lab</footer> <!-- ✅ ここに置く -->
 </body>
 </html>
-
