@@ -47,12 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button type="submit">登録する</button>
       </form>
     <?php endif; ?>
-    </div> <!-- ← ここで .container 終了 -->
+    <!-- フォームの外に出す -->
+<div class="container">
+  <!-- 登録フォーム内容 -->
+</div>
 
-  <footer>
-    &copy; 2025 yabuki lab
-  </footer>
-
+<footer>© 2025 yabuki lab</footer> <!-- ✅ ここに置く -->
 </body>
 </html>
-
