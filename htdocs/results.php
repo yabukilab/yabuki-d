@@ -26,45 +26,18 @@ try {
         $search_keyword_display = htmlspecialchars($search_keyword, ENT_QUOTES, 'UTF-8');
 
         // SQLクエリの準備
-        $sql = "SELECT word, translation, part FROM wordtable WHERE word LIKE ?";
+        $sql = "SELECT id, word FROM wordtable WHERE word LIKE ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['%' . $search_keyword . '%']);
         $results = $stmt->fetchAll();
 
         if ($results) {
             foreach ($results as $row) {
-                // style.cssのクラス定義に合わせてHTMLを生成
+                $word_id = $row['id'];
+                $word = htmlspecialchars($row['word'], ENT_QUOTES, 'UTF-8');
+                // 単語をクリックで詳細ページへ
                 $results_html .= '<div class="result-item">';
-                $results_html .= '<h3>' . htmlspecialchars($row['word'], ENT_QUOTES, 'UTF-8') . '</h3>';
-
-                // 品詞データがあれば表示
-                if (!empty($row['part_of_speech'])) {
-                    $results_html .= '<p class="type">' . htmlspecialchars($row['part'], ENT_QUOTES, 'UTF-8') . '</p>';
-                }
-
-                // 日本語訳
-                $results_html .= '<p class="meaning">' . htmlspecialchars($row['translation'], ENT_QUOTES, 'UTF-8') . '</p>';
-                
-                 // --- メモ機能追加部分 ---
-                if (isset($_SESSION['user_id'])) {
-                    // 既存メモ取得
-                    $memo_stmt = $pdo->prepare("SELECT memo FROM memos WHERE user_id = ? AND word_id = ?");
-                    $memo_stmt->execute([$_SESSION['user_id'], $word_id]);
-                    $memo_row = $memo_stmt->fetch();
-                    $memo_val = $memo_row ? htmlspecialchars($memo_row['memo'], ENT_QUOTES, 'UTF-8') : '';
-
-                    $results_html .= '<form method="post" action="save_memo.php" style="margin-top:1em;">';
-                    $results_html .= '<input type="hidden" name="word_id" value="' . $word_id . '">';
-                    $results_html .= '<input type="hidden" name="term" value="' . htmlspecialchars($search_keyword, ENT_QUOTES, 'UTF-8') . '">';
-                    $results_html .= '<label>メモ:</label><br>';
-                    $results_html .= '<textarea name="memo" rows="2" style="width:98%;">' . $memo_val . '</textarea><br>';
-                    $results_html .= '<button type="submit">メモを保存</button>';
-                    $results_html .= '</form>';
-                } else {
-                    $results_html .= '<div style="margin-top:1em;color:#888;">※メモ機能はログイン後に利用できます</div>';
-                }
-                // --- メモ機能ここまで ---
-
+                $results_html .= '<a href="word_detail.php?id=' . $word_id . '" class="word-title" style="font-weight:bold;font-size:1.2em;">' . $word . '</a>';
                 $results_html .= '</div>';
             }
         } else {
@@ -77,8 +50,8 @@ try {
 } catch (PDOException $e) {
     error_log("Database Error: " . $e->getMessage());
     $results_html = '<p class="error-message">データベースへの接続に失敗しました。</p>';
-    //echo '<p class="error-message">データベースエラー: ' . htmlspecialchars($e->getMessage()) . '</p>';
-    //exit;
+    echo '<p class="error-message">データベースエラー: ' . htmlspecialchars($e->getMessage()) . '</p>';
+    exit;
 }
 ?>
 
