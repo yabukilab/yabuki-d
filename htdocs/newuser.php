@@ -1,27 +1,29 @@
 <?php
-// 登録処理（POST時）
-$error = "";
-$success = false;
+// DB接続情報
+$host = 'localhost';        // データベースサーバ（通常は localhost）
+$dbname = 'userdb';         // 使用するデータベース名
+$user = 'your_username';    // データベースのユーザー名
+$pass = 'your_password';    // パスワード
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $userid = $_POST["userid"] ?? "";
-    $password = $_POST["password"] ?? "";
-    $password_confirm = $_POST["password_confirm"] ?? "";
+try {
+    // DSN（接続文字列）
+    $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
-    // ダミーの既存ID（実際はDBで確認）
-    $usedIds = ["user1", "testuser", "admin"];
+    // PDOインスタンスの生成
+    $pdo = new PDO($dsn, $user, $pass);
 
-    // バリデーション
-    if (in_array($userid, $usedIds)) {
-        $error = "※このIDは既に使われています";
-    } elseif ($password !== $password_confirm) {
-        $error = "※パスワードが一致しません";
-    } else {
-        // 登録成功（実際はDB保存）
-        $success = true;
-    }
+    // エラーモードを例外に設定
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // 接続成功メッセージ（本番ではコメントアウト推奨）
+    // echo "データベースに接続しました";
+} catch (PDOException $e) {
+    // 接続失敗時の処理
+    echo "データベース接続エラー: " . $e->getMessage();
+    exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
