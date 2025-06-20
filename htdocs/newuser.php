@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif; ?>
   </div>
   <footer>
-      &copy; © 2025 yabuki lab
+      &copy;  2025 yabuki lab
     </footer>
   </body>
 </html>
