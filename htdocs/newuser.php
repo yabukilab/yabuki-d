@@ -48,5 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </form>
     <?php endif; ?>
   </div>
+  <footer>
+        <p>© 2025 yabuki lab</p>
+    </footer>
 </body>
 </html>
