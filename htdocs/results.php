@@ -77,8 +77,8 @@ try {
 } catch (PDOException $e) {
     error_log("Database Error: " . $e->getMessage());
     $results_html = '<p class="error-message">データベースへの接続に失敗しました。</p>';
-    echo '<p class="error-message">データベースエラー: ' . htmlspecialchars($e->getMessage()) . '</p>';
-    exit;
+    //echo '<p class="error-message">データベースエラー: ' . htmlspecialchars($e->getMessage()) . '</p>';
+    //exit;
 }
 ?>
 
