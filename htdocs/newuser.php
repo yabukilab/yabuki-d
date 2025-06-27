@@ -1,19 +1,22 @@
 <?php
-// DB接続情報
-$host = 'localhost';        // データベースサーバ（通常は localhost）
-$dbname = 'userdb';         // 使用するデータベース名
-$user = 'your_username';    // データベースのユーザー名
-$pass = 'your_password';    // パスワード
+// --- データベース接続設定 ---
+// ご自身の環境に合わせて変更してください
+$dbServer = isset($_ENV['MYSQL_SERVER'])    ? $_ENV['MYSQL_SERVER']      : '127.0.0.1';
+$dbUser = isset($_SERVER['MYSQL_USER'])     ? $_SERVER['MYSQL_USER']     : 'testuser';
+$dbPass = isset($_SERVER['MYSQL_PASSWORD']) ? $_SERVER['MYSQL_PASSWORD'] : 'pass';
+$dbName = isset($_SERVER['MYSQL_DB'])       ? $_SERVER['MYSQL_DB']       : 'userdb';
+
+// DSNとPDOオプション
+$dsn = "mysql:host={$dbServer};dbname={$dbName};charset=utf8";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
 try {
-    // DSN（接続文字列）
-    $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-
-    // PDOインスタンスの生成
-    $pdo = new PDO($dsn, $user, $pass);
-
-    // エラーモードを例外に設定
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // DSN（接続文字列）を修正
+    $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
 
     // 接続成功メッセージ（本番ではコメントアウト推奨）
     // echo "データベースに接続しました";
@@ -51,6 +54,6 @@ try {
     <?php endif; ?>
   </div>
 
-<footer>© 2025 yabuki lab</footer> <!-- ✅ ここに置く -->
+<footer>© 2025 yabuki lab</footer> 
 </body>
 </html>
