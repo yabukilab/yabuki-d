@@ -59,6 +59,9 @@ try {
 <body>
     <header>
         <h1>フランス語辞書</h1>
+        <nav>
+            <a href="logout.php" style="float:right;">ログアウト</a>
+        </nav>
     </header>
     <main>
         <?php if (!empty($error_message)): ?>
