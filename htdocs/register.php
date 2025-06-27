@@ -1,5 +1,7 @@
 <?php
-// 
+
+session_start();
+
 $dbServer = isset($_ENV['MYSQL_SERVER'])    ? $_ENV['MYSQL_SERVER']      : '127.0.0.1';
 $dbUser = isset($_SERVER['MYSQL_USER'])     ? $_SERVER['MYSQL_USER']     : 'testuser';
 $dbPass = isset($_SERVER['MYSQL_PASSWORD']) ? $_SERVER['MYSQL_PASSWORD'] : 'pass';
@@ -43,8 +45,10 @@ $stmt = $pdo->prepare($sql);
 $result = $stmt->execute([$userId, $passwordHash]);
 
 if ($result) {
-    // リダイレクト（成功時）
-    header("Location: search.php"); // ← ここを希望の画面に変更
+    $_SESSION['user_id'] = $pdo->lastInsertId();  // auto_increment ID
+    $_SESSION['username'] = $userId;              // 入力されたユーザー名
+
+    header("Location: search.php");               // ログイン後の画面へ
     exit();
 } else {
     echo "登録に失敗しました";
