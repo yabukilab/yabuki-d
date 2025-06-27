@@ -14,6 +14,10 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
+$success = false; // ← 追加
+$error = '';      // ← 追加
+$userid = '';     // ← 追加
+
 try {
     // DSN（接続文字列）を修正
     $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
