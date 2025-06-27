@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["username"] = $user["username"];
 
         // ログイン成功 → 検索画面へリダイレクト
-        header("Location: search.html"); // ← ここを変更してもOK
+        header("Location: search.php"); // ← ここを変更してもOK
         exit();
     } else {
         $error = "※IDまたはパスワードが正しくありません";
