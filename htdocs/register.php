@@ -43,8 +43,11 @@ $stmt = $pdo->prepare($sql);
 $result = $stmt->execute([$userId, $passwordHash]);
 
 if ($result) {
-    echo "登録が完了しました";
+    // リダイレクト（成功時）
+    header("Location: search.php"); // ← ここを希望の画面に変更
+    exit();
 } else {
     echo "登録に失敗しました";
 }
+
 ?>
