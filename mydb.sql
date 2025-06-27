@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: localhost:3306
--- 生成日時: 2025 年 6 月 27 日 09:26
+-- 生成日時: 2025 年 6 月 27 日 09:30
 -- サーバのバージョン： 10.11.11-MariaDB-0ubuntu0.24.04.2
 -- PHP のバージョン: 8.3.6
 
@@ -660,6 +660,12 @@ INSERT INTO `wordtable` (`id`, `word`, `translation`, `part`, `created_at`) VALU
 --
 
 --
+-- テーブルのインデックス `memos`
+--
+ALTER TABLE `memos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- テーブルのインデックス `users`
 --
 ALTER TABLE `users`
@@ -675,6 +681,12 @@ ALTER TABLE `wordtable`
 --
 -- ダンプしたテーブルの AUTO_INCREMENT
 --
+
+--
+-- テーブルの AUTO_INCREMENT `memos`
+--
+ALTER TABLE `memos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルの AUTO_INCREMENT `users`
