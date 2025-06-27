@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // --- データベース接続設定 ---
 $dbServer = isset($_ENV['MYSQL_SERVER'])    ? $_ENV['MYSQL_SERVER']      : '127.0.0.1';
 $dbUser = isset($_SERVER['MYSQL_USER'])     ? $_SERVER['MYSQL_USER']     : 'testuser';
@@ -11,6 +13,12 @@ $options = [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
+
+// ログイン必須
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
 
 $word = $part = $translation = $memo_val = '';
 $word_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -28,15 +36,15 @@ try {
         $translation = htmlspecialchars($row['translation'], ENT_QUOTES, 'UTF-8');
     }
 
-    // メモ取得
-    $memo_stmt = $pdo->prepare("SELECT memo FROM memos WHERE word_id = ?");
-    $memo_stmt->execute([$word_id]);
+    // メモ取得（ユーザーごと）
+    $memo_stmt = $pdo->prepare("SELECT memo FROM memos WHERE user_id = ? AND word_id = ?");
+    $memo_stmt->execute([$_SESSION['user_id'], $word_id]);
     $memo_row = $memo_stmt->fetch();
     $memo_val = $memo_row ? htmlspecialchars($memo_row['memo'], ENT_QUOTES, 'UTF-8') : '';
 
 } catch (PDOException $e) {
     error_log("Database Error: " . $e->getMessage());
-    $error_message = 'データベースへの接続に失敗しました。';
+    $error_message = 'データベースへの接続に失敗しました。<br>' . htmlspecialchars($e->getMessage());
 }
 ?>
 
@@ -63,6 +71,7 @@ try {
             <p class="meaning"><?php echo $translation; ?></p>
             <form method="post" action="save_memo.php" style="margin-top:1em;">
                 <input type="hidden" name="word_id" value="<?php echo $word_id; ?>">
+                <input type="hidden" name="term" value="<?php echo isset($_GET['q']) ? h($_GET['q']) : ''; ?>">
                 <label>メモ:</label><br>
                 <textarea name="memo" rows="4" style="width:98%;"><?php echo $memo_val; ?></textarea><br>
                 <button type="submit">メモを保存</button>

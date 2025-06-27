@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $word_id = $_POST['word_id'] ?? null;
 $memo = $_POST['memo'] ?? '';
+$term = $_POST['term'] ?? ''; // ← ここを修正
 
 if ($word_id !== null) {
     $stmt = $pdo->prepare("
@@ -25,5 +26,6 @@ if ($word_id !== null) {
     ]);
 }
 
-header('Location: results.php?term=' . urlencode($_GET['term'] ?? ''));
+// 検索結果画面にリダイレクト（パラメータ名をqに修正）
+header('Location: results.php?q=' . urlencode($term));
 exit();
