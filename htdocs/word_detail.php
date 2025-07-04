@@ -87,7 +87,6 @@ try {
         <?php else: ?>
             <p class="not-found-message">単語が見つかりませんでした。</p>
         <?php endif; ?>
-        <a href="results.php?q=<?php echo isset($_GET['q']) ? urlencode($_GET['q']) : ''; ?>" class="back-link">検索結果に戻る</a>
     </main>
     <footer>
         <p>© 2025 yabuki lab</p>
