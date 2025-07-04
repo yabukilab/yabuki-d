@@ -51,7 +51,6 @@ if ($result) {
     header("Location: search.php");               // ログイン後の画面へ
     exit();
 } else {
-    echo "登録に失敗しました";
+    echo '<div style="font-size:1.2em; color:red; margin-top:1em;">登録に失敗しました</div>';
 }
-
 ?>

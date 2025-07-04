@@ -67,6 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif; ?>
   </div>
 
-<footer>© 2025 yabuki lab</footer> <!-- ✅ ここに置く -->
+<footer>© 2025 yabuki lab</footer> 
 </body>
 </html>
