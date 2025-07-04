@@ -26,6 +26,6 @@ if ($word_id !== null) {
     ]);
 }
 
-// 検索結果画面にリダイレクト（パラメータ名をqに修正）
-header('Location: results.php?q=' . urlencode($term));
+// 単語詳細ページにリダイレクト
+header('Location: word_detail.php?id=' . urlencode($word_id) . (empty($term) ? '' : '&q=' . urlencode($term)));
 exit();

@@ -79,6 +79,11 @@ try {
                 <textarea name="memo" rows="4" style="width:98%;"><?php echo $memo_val; ?></textarea><br>
                 <button type="submit">メモを保存</button>
             </form>
+            <form method="post" action="delete_memo.php" style="margin-top:0.5em;">
+                <input type="hidden" name="word_id" value="<?php echo $word_id; ?>">
+                <input type="hidden" name="term" value="<?php echo isset($_GET['q']) ? h($_GET['q']) : ''; ?>">
+                <button type="submit" onclick="return confirm('本当にメモを削除しますか？');">メモを削除</button>
+            </form>
         <?php else: ?>
             <p class="not-found-message">単語が見つかりませんでした。</p>
         <?php endif; ?>
