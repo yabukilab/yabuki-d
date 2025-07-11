@@ -28,7 +28,7 @@ try {
         // SQLクエリの準備
         $sql = "SELECT id, word FROM wordtable WHERE word LIKE ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute(['%' . $search_keyword . '%']);
+        $stmt->execute([$search_keyword . '%']);
         $results = $stmt->fetchAll();
 
         if ($results) {
